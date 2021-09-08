@@ -1,4 +1,5 @@
 const express = require('express');
+const Users = require('./users-model')
 const validateUserId = require('../middleware/middleware')
 
 // You will need `users-model.js` and `posts-model.js` both
@@ -8,6 +9,13 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
   // RETURN AN ARRAY WITH ALL THE USERS
+  Users.get()
+    .then(users => {
+      res.status(200).json(users)
+    })
+    .catch(error => {
+      next(error)
+    })
 });
 
 router.get('/:id', validateUserId, (req, res) => {
